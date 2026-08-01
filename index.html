@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notícias | Ordinária Russas</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+        body { background: #f0f2f5; color: #333; }
+
+        /* PLAYER DA RÁDIO NO TOPO */
+        .barra-player {
+            background: #003399;
+            color: white;
+            padding: 6px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .barra-player span { font-size: 14px; font-weight: bold; }
+        .barra-player audio { width: 220px; height: 28px; }
+
+        /* CABEÇALHO DO SITE */
+        .cabecalho {
+            background: #003399;
+            color: #ffcc00;
+            padding: 20px 15px;
+            text-align: center;
+            border-bottom: 3px solid #ffcc00;
+        }
+        .cabecalho h1 { font-size: 28px; margin-bottom: 5px; }
+        .cabecalho p { font-size: 15px; color: white; }
+
+        /* MENU */
+        .menu {
+            background: white;
+            border-bottom: 2px solid #003399;
+            position: sticky;
+            top: 40px;
+            z-index: 99;
+        }
+        .menu ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        .menu li a {
+            display: block;
+            padding: 12px 18px;
+            color: #003399;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .menu li a:hover, .menu li a.ativo { background: #003399; color: #ffcc00; }
+
+        /* ÁREA PRINCIPAL */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: 7fr 3fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+
+        /* PÁGINAS */
+        .pagina { display: none; }
+        .pagina.visivel { display: block; }
+
+        /* DESTAQUE PRINCIPAL */
+        .destaque {
+            background: white;
+            border-radius: 3px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .destaque img { width: 100%; height: auto; }
+        .conteudo-destaque { padding: 15px; }
+        .categoria {
+            display: inline-block;
+            background: #ffcc00;
+            color: #003399;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 2px;
+            margin-bottom: 8px;
+        }
+        .conteudo-destaque h2 { color: #003399; font-size: 22px; margin-bottom: 8px; }
+        .conteudo-destaque p { color: #555; line-height: 1.6; }
+
+        /* LISTA DE NOTÍCIAS */
+        .lista-noticias { display: grid; gap: 15px; }
+        .noticia {
+            background: white;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 12px;
+            overflow: hidden;
+        }
+        .noticia img { width: 140px; height: 90px; object-fit: cover; flex-shrink: 0; }
+        .texto-noticia { padding: 10px; }
+        .texto-noticia h3 { font-size: 16px; color: #003399; margin-bottom: 5px; }
+        .texto-noticia p { font-size: 14px; color: #666; line-height: 1.5; }
+
+        /* COLUNA LATERAL */
+        .caixa-lateral {
+            background: white;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .titulo-lateral {
+            background: #003399;
+            color: #ffcc00;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .conteudo-lateral { padding: 15px; }
+        .conteudo-lateral a {
+            display: block;
+            padding: 6px 0;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .conteudo-lateral a:hover { color: #003399; padding-left: 5px; }
+
+        /* RODAPÉ */
+        footer {
+            background: #003399;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-top: 3px solid #ffcc00;
+        }
+        footer a { color: #ffcc00; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<!-- 🎧 PLAYER DA SUA RÁDIO SEMPRE NO TOPO -->
+<div class="barra-player">
+    <span>🎧 Ouvindo: Web Rádio Ordinária Russas</span>
+    <audio controls preload="none">
+        <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    
+</div>
+
+<!-- CABEÇALHO -->
+<div class="cabecalho">
+    <h1>📰 Notícias Ordinária Russas</h1>
+    <p>Informação confiável do Brasil e do Mundo, 24h por dia</p>
+</div>
+
+<!-- MENU -->
+<nav class="menu">
+    <ul>
+        <li><a pagina="inicio" class="link-menu ativo">INÍCIO</a></li>
+        <li><a pagina="brasil" class="link-menu">BRASIL</a></li>
+        <li><a pagina="mundo" class="link-menu">MUNDO</a></li>
+        <li><a pagina="regiao" class="link-menu">REGIÃO</a></li>
+        <li><a pagina="entretenimento" class="link-menu">ENTRETENIMENTO</a></li>
+        <li><a href="https://manoelcorpus.github.io/" target="_blank">🎧 IR PARA A RÁDIO</a></li>
+    </ul>
+</nav>
+
+<!-- CONTEÚDO -->
+<div class="container">
+    <div class="coluna-principal">
+        <!-- PÁGINA INÍCIO -->
+        <div class="pagina visivel" id="inicio">
+            <div class="destaque">
+                <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Notícia Destaque">
+                <div class="conteudo-destaque">
+                    <span class="categoria">BRASIL</span>
+                    <h2>Destaque principal: confira as notícias mais importantes do dia</h2>
+                    <p>Aqui você fica por dentro de tudo o que acontece no país e no mundo, com informação clara e direta. Atualizado todos os dias!</p>
+                </div>
+            </div>
+
+            <div class="lista-noticias">
+                <div class="noticia">
+                    <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed45a68d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Notícia">
+                    <div class="texto-noticia">
+                        <span class="categoria">MUNDO</span>
+                        <h3>Principais acontecimentos internacionais da semana</h3>
+                        <p>Fique por dentro do que muda no cenário mundial e como pode afetar o Brasil.</p>
+                    </div>
+                </div>
+                <div class="noticia">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Notícia">
+                    <div class="texto-noticia">
+                        <span class="categoria">REGIÃO</span>
+                        <h3>Acontece também no Ceará e em Russas</h3>
+                        <p>Notícias da nossa região, eventos e novidades que interessam a você.</p>
+                    </div>
+                </div>
+                <div class="noticia">
+                    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Notícia">
+                    <div class="texto-noticia">
+                        <span class="categoria">ENTRETENIMENTO</span>
+                        <h3>Lançamentos, música e cultura popular</h3>
+                        <p>Tudo sobre o mundo artístico, dicas de lazer e muita música boa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DEMAIS PÁGINAS -->
+        <div class="pagina" id="brasil">
+            <div class="destaque">
+                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Brasil">
+                <div class="conteudo-destaque">
+                    <span class="categoria">BRASIL</span>
+                    <h3>Notícias de todo o território nacional</h3>
+                    <p>Fique por dentro de política, economia, saúde e tudo o que acontece no nosso país.</p>
+                </div>
+            </div>
+            <div class="lista-noticias">
+                <div class="noticia">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Notícia">
+                    <div class="texto-noticia">
+                        <h3>Novas medidas anunciadas</h3>
+                        <p>Confira as atualizações importantes para toda a população brasileira.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagina" id="mundo">
+            <div class="destaque">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Mundo">
+                <div class="conteudo-destaque">
+                    <span class="categoria">MUNDO</span>
+                    <h3>O que acontece fora do Brasil</h3>
+                    <p>Informações globais, eventos internacionais e repercussão no nosso país.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagina" id="regiao">
+            <div class="destaque">
+                <img src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Região">
+                <div class="conteudo-destaque">
+                    <span class="categoria">REGIÃO</span>
+                    <h3>Ceará, Russas e toda a nossa região</h3>
+                    <p>Notícias locais, serviços, eventos e tudo o que interessa a você daqui.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagina" id="entretenimento">
+            <div class="destaque">
+                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Entretenimento">
+                <div class="conteudo-destaque">
+                    <span class="categoria">ENTRETENIMENTO</span>
+                    <h3>Música, cultura e diversão</h3>
+                    <p>Lançamentos, dicas, artistas da terra e muita coisa boa para você curtir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COLUNA LATERAL -->
+    <div class="coluna-direita">
+        <div class="caixa-lateral">
+            <div class="titulo-lateral">🔥 MAIS LIDAS</div>
+            <div class="conteudo-lateral">
+                <a href="#">Principais notícias do dia</a>
+                <a href="#">Previsão do tempo para Russas</a>
+                <a href="#">Programação da Rádio Ordinária</a>
+                <a href="#">Eventos na região</a>
+                <a href="#">Esportes e novidades</a>
+            </div>
+        </div>
+
+        <div class="caixa-lateral">
+            <div class="titulo-lateral">🎧 OUÇA TAMBÉM</div>
+            <div class="conteudo-lateral" style="text-align: center;">
+                <p style="margin-bottom: 10px;">Fique ligado na melhor companhia!</p>
+                <a href="https://manoelcorpus.github.io/" target="_blank" style="display: block; background:#003399; color:#ffcc00; padding:10px; text-decoration:none; font-weight:bold; border-radius:3px;">IR PARA A RÁDIO</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>📰 Notícias Ordinária Russas | Informação com confiança</p>
+    <p>© Todos os direitos reservados | <a href="https://manoelcorpus.github.io/" target="_blank">Web Rádio Ordinária Russas</a></p>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+document.querySelectorAll('.link-menu').forEach(botao => {
+    botao.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('.link-menu').forEach(b => b.classList.remove('ativo'));
+        document.querySelectorAll('.pagina').forEach(p => p.classList.remove('visivel'));
+        botao.classList.add('ativo');
+        document.getElementById(botao.getAttribute('pagina')).classList.add('visivel');
+        window.scrollTo(0,0);
+    })
+})
+</script>
+
+</body>
+</html>

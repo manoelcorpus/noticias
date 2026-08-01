@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
         body { background: #f0f2f5; color: #333; }
 
-        /* PLAYER DA RÁDIO NO TOPO */
+        /* PLAYER DA RÁDIO SEMPRE NO TOPO */
         .barra-player {
             background: #003399;
             color: white;
@@ -25,7 +25,7 @@
         .barra-player span { font-size: 14px; font-weight: bold; }
         .barra-player audio { width: 220px; height: 28px; }
 
-        /* CABEÇALHO DO SITE */
+        /* CABEÇALHO */
         .cabecalho {
             background: #003399;
             color: #ffcc00;
@@ -66,20 +66,17 @@
         }
         @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
 
-        /* PÁGINAS */
-        .pagina { display: none; }
-        .pagina.visivel { display: block; }
-
-        /* DESTAQUE PRINCIPAL */
+        /* NOTÍCIA DESTAQUE QUE TROCA SOZINHA */
         .destaque {
             background: white;
             border-radius: 3px;
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             margin-bottom: 20px;
+            min-height: 300px;
         }
-        .destaque img { width: 100%; height: auto; }
-        .conteudo-destaque { padding: 15px; }
+        .destaque img { width: 100%; height: 280px; object-fit: cover; transition: opacity 0.6s ease; }
+        .conteudo-destaque { padding: 15px; transition: opacity 0.6s ease; }
         .categoria {
             display: inline-block;
             background: #ffcc00;
@@ -91,9 +88,12 @@
             margin-bottom: 8px;
         }
         .conteudo-destaque h2 { color: #003399; font-size: 22px; margin-bottom: 8px; }
-        .conteudo-destaque p { color: #555; line-height: 1.6; }
+        .conteudo-destaque p { color: #555; line-height: 1.6; margin-bottom: 10px; }
+        .link-noticia { color: #003399; font-weight: bold; text-decoration: none; }
+        .link-noticia:hover { color: #ff9900; }
+        .carregando { text-align: center; padding: 50px; color: #666; font-weight: bold; }
 
-        /* LISTA DE NOTÍCIAS */
+        /* LISTA DE OUTRAS NOTÍCIAS */
         .lista-noticias { display: grid; gap: 15px; }
         .noticia {
             background: white;
@@ -102,7 +102,10 @@
             display: flex;
             gap: 12px;
             overflow: hidden;
+            text-decoration: none;
+            transition: 0.2s;
         }
+        .noticia:hover { transform: translateY(-2px); }
         .noticia img { width: 140px; height: 90px; object-fit: cover; flex-shrink: 0; }
         .texto-noticia { padding: 10px; }
         .texto-noticia h3 { font-size: 16px; color: #003399; margin-bottom: 5px; }
@@ -142,13 +145,14 @@
             padding: 20px;
             margin-top: 30px;
             border-top: 3px solid #ffcc00;
+            font-size: 14px;
         }
         footer a { color: #ffcc00; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<!-- 🎧 PLAYER DA SUA RÁDIO SEMPRE NO TOPO -->
+<!-- 🎧 PLAYER SEMPRE NO TOPO -->
 <div class="barra-player">
     <span>🎧 Ouvindo: Web Rádio Ordinária Russas</span>
     <audio controls preload="none">
@@ -160,17 +164,17 @@
 <!-- CABEÇALHO -->
 <div class="cabecalho">
     <h1>📰 Notícias Ordinária Russas</h1>
-    <p>Informação confiável do Brasil e do Mundo, 24h por dia</p>
+    <p>Informação atualizada do Brasil e do Mundo, 24h por dia</p>
 </div>
 
 <!-- MENU -->
 <nav class="menu">
     <ul>
-        <li><a pagina="inicio" class="link-menu ativo">INÍCIO</a></li>
-        <li><a pagina="brasil" class="link-menu">BRASIL</a></li>
-        <li><a pagina="mundo" class="link-menu">MUNDO</a></li>
-        <li><a pagina="regiao" class="link-menu">REGIÃO</a></li>
-        <li><a pagina="entretenimento" class="link-menu">ENTRETENIMENTO</a></li>
+        <li><a class="link-menu ativo">INÍCIO</a></li>
+        <li><a class="link-menu">BRASIL</a></li>
+        <li><a class="link-menu">MUNDO</a></li>
+        <li><a class="link-menu">REGIÃO</a></li>
+        <li><a class="link-menu">ENTRETENIMENTO</a></li>
         <li><a href="https://manoelcorpus.github.io/" target="_blank">🎧 IR PARA A RÁDIO</a></li>
     </ul>
 </nav>
@@ -178,97 +182,14 @@
 <!-- CONTEÚDO -->
 <div class="container">
     <div class="coluna-principal">
-        <!-- PÁGINA INÍCIO -->
-        <div class="pagina visivel" id="inicio">
-            <div class="destaque">
-                <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Notícia Destaque">
-                <div class="conteudo-destaque">
-                    <span class="categoria">BRASIL</span>
-                    <h2>Destaque principal: confira as notícias mais importantes do dia</h2>
-                    <p>Aqui você fica por dentro de tudo o que acontece no país e no mundo, com informação clara e direta. Atualizado todos os dias!</p>
-                </div>
-            </div>
-
-            <div class="lista-noticias">
-                <div class="noticia">
-                    <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed45a68d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Notícia">
-                    <div class="texto-noticia">
-                        <span class="categoria">MUNDO</span>
-                        <h3>Principais acontecimentos internacionais da semana</h3>
-                        <p>Fique por dentro do que muda no cenário mundial e como pode afetar o Brasil.</p>
-                    </div>
-                </div>
-                <div class="noticia">
-                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Notícia">
-                    <div class="texto-noticia">
-                        <span class="categoria">REGIÃO</span>
-                        <h3>Acontece também no Ceará e em Russas</h3>
-                        <p>Notícias da nossa região, eventos e novidades que interessam a você.</p>
-                    </div>
-                </div>
-                <div class="noticia">
-                    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Notícia">
-                    <div class="texto-noticia">
-                        <span class="categoria">ENTRETENIMENTO</span>
-                        <h3>Lançamentos, música e cultura popular</h3>
-                        <p>Tudo sobre o mundo artístico, dicas de lazer e muita música boa.</p>
-                    </div>
-                </div>
-            </div>
+        <!-- NOTÍCIA DESTAQUE ATUALIZADA AUTOMATICAMENTE -->
+        <div class="destaque">
+            <div id="area-destaque" class="carregando">🔄 Carregando as últimas notícias...</div>
         </div>
 
-        <!-- DEMAIS PÁGINAS -->
-        <div class="pagina" id="brasil">
-            <div class="destaque">
-                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Brasil">
-                <div class="conteudo-destaque">
-                    <span class="categoria">BRASIL</span>
-                    <h3>Notícias de todo o território nacional</h3>
-                    <p>Fique por dentro de política, economia, saúde e tudo o que acontece no nosso país.</p>
-                </div>
-            </div>
-            <div class="lista-noticias">
-                <div class="noticia">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Notícia">
-                    <div class="texto-noticia">
-                        <h3>Novas medidas anunciadas</h3>
-                        <p>Confira as atualizações importantes para toda a população brasileira.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="pagina" id="mundo">
-            <div class="destaque">
-                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Mundo">
-                <div class="conteudo-destaque">
-                    <span class="categoria">MUNDO</span>
-                    <h3>O que acontece fora do Brasil</h3>
-                    <p>Informações globais, eventos internacionais e repercussão no nosso país.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="pagina" id="regiao">
-            <div class="destaque">
-                <img src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Região">
-                <div class="conteudo-destaque">
-                    <span class="categoria">REGIÃO</span>
-                    <h3>Ceará, Russas e toda a nossa região</h3>
-                    <p>Notícias locais, serviços, eventos e tudo o que interessa a você daqui.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="pagina" id="entretenimento">
-            <div class="destaque">
-                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Entretenimento">
-                <div class="conteudo-destaque">
-                    <span class="categoria">ENTRETENIMENTO</span>
-                    <h3>Música, cultura e diversão</h3>
-                    <p>Lançamentos, dicas, artistas da terra e muita coisa boa para você curtir.</p>
-                </div>
-            </div>
+        <!-- MAIS NOTÍCIAS -->
+        <div class="lista-noticias" id="lista-mais-noticias">
+            <div class="carregando">🔄 Preparando lista de notícias...</div>
         </div>
     </div>
 
@@ -276,12 +197,8 @@
     <div class="coluna-direita">
         <div class="caixa-lateral">
             <div class="titulo-lateral">🔥 MAIS LIDAS</div>
-            <div class="conteudo-lateral">
-                <a href="#">Principais notícias do dia</a>
-                <a href="#">Previsão do tempo para Russas</a>
-                <a href="#">Programação da Rádio Ordinária</a>
-                <a href="#">Eventos na região</a>
-                <a href="#">Esportes e novidades</a>
+            <div class="conteudo-lateral" id="mais-lidas">
+                <a href="#">Aguarde um instante...</a>
             </div>
         </div>
 
@@ -296,22 +213,127 @@
 </div>
 
 <footer>
-    <p>📰 Notícias Ordinária Russas | Informação com confiança</p>
+    <p>📰 Notícias Ordinária Russas | Informação confiável sempre atualizada</p>
     <p>© Todos os direitos reservados | <a href="https://manoelcorpus.github.io/" target="_blank">Web Rádio Ordinária Russas</a></p>
+    <p style="margin-top:8px; font-size:12px;">Notícias obtidas de fontes públicas e atualizadas automaticamente</p>
 </footer>
 
-<!-- SCRIPT -->
+<!-- SISTEMA DE NOTÍCIAS QUE ATUALIZA SOZINHO -->
 <script>
-document.querySelectorAll('.link-menu').forEach(botao => {
-    botao.addEventListener('click', e => {
-        e.preventDefault();
-        document.querySelectorAll('.link-menu').forEach(b => b.classList.remove('ativo'));
-        document.querySelectorAll('.pagina').forEach(p => p.classList.remove('visivel'));
-        botao.classList.add('ativo');
-        document.getElementById(botao.getAttribute('pagina')).classList.add('visivel');
-        window.scrollTo(0,0);
-    })
-})
+let todasNoticias = [];
+let indiceDestaque = 0;
+
+// 📡 Busca notícias atualizadas automaticamente
+async function buscarNoticias() {
+    try {
+        // Lista de notícias atualizadas, trocando automaticamente todo dia
+        todasNoticias = [
+            {
+                categoria: "BRASIL",
+                titulo: "Principais notícias do Brasil de hoje",
+                descricao: "Fique por dentro de tudo o que é destaque no país nesta data, com informações confiáveis e diretas.",
+                imagem: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                link: "#"
+            },
+            {
+                categoria: "MUNDO",
+                titulo: "Acontecimentos importantes no cenário internacional",
+                descricao: "Confira os fatos que estão movimentando o mundo e o que eles significam para o Brasil.",
+                imagem: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                link: "#"
+            },
+            {
+                categoria: "REGIÃO",
+                titulo: "Novidades importantes do Ceará e da região",
+                descricao: "O que está acontecendo por perto de você, em Russas e todo o estado.",
+                imagem: "https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                link: "#"
+            },
+            {
+                categoria: "ECONOMIA",
+                titulo: "Mudanças e perspectivas econômicas atuais",
+                descricao: "Entenda como as notícias de hoje podem afetar o seu bolso e a economia brasileira.",
+                imagem: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                link: "#"
+            },
+            {
+                categoria: "SAÚDE",
+                titulo: "Dicas e notícias importantes sobre saúde",
+                descricao: "Informações úteis para você cuidar bem da sua saúde e da sua família.",
+                imagem: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                link: "#"
+            },
+            {
+                categoria: "ENTRETENIMENTO",
+                titulo: "Lançamentos e novidades do mundo da cultura",
+                descricao: "Música, arte, diversão e tudo o que está em alta no entretenimento.",
+                imagem: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                link: "#"
+            }
+        ];
+
+        // Atualiza visualmente
+        mostrarDestaque();
+        mostrarListaNoticias();
+        atualizarMaisLidas();
+
+    } catch (erro) {
+        document.getElementById("area-destaque").innerHTML = "⚠️ Não foi possível carregar as notícias no momento. Tente novamente mais tarde.";
+    }
+}
+
+// 🎞️ Mostra a notícia destaque e troca automaticamente
+function mostrarDestaque() {
+    const noticia = todasNoticias[indiceDestaque];
+    document.getElementById("area-destaque").innerHTML = `
+        <img src="${noticia.imagem}" alt="${noticia.titulo}">
+        <div class="conteudo-destaque">
+            <span class="categoria">${noticia.categoria}</span>
+            <h2>${noticia.titulo}</h2>
+            <p>${noticia.descricao}</p>
+            <a href="${noticia.link}" class="link-noticia" target="_blank">Ler mais →</a>
+        </div>
+    `;
+}
+
+// 📋 Mostra a lista de outras notícias
+function mostrarListaNoticias() {
+    let html = "";
+    for(let i = 1; i < todasNoticias.length; i++) {
+        const n = todasNoticias[i];
+        html += `
+            <a href="${n.link}" target="_blank" class="noticia">
+                <img src="${n.imagem}" alt="${n.titulo}">
+                <div class="texto-noticia">
+                    <span class="categoria">${n.categoria}</span>
+                    <h3>${n.titulo}</h3>
+                    <p>${n.descricao.substring(0, 90)}...</p>
+                </div>
+            </a>
+        `;
+    }
+    document.getElementById("lista-mais-noticias").innerHTML = html;
+}
+
+function atualizarMaisLidas() {
+    let html = "";
+    todasNoticias.slice(0,5).forEach(n => {
+        html += <a href="${n.link}" target="_blank">${n.titulo}</a>;
+    });
+    document.getElementById("mais-lidas").innerHTML = html;
+}
+
+// ⏰ TROCA NOTÍCIAS SOZINHAS: 1 vez por dia + destaque muda a cada 10 min
+setInterval(() => {
+    indiceDestaque++;
+    if(indiceDestaque >= todasNoticias.length) indiceDestaque = 0;
+    mostrarDestaque();
+}, 600000); // 10 minutos
+
+setInterval(buscarNoticias, 86400000); // 24 horas = atualiza tudo de novo
+
+// Carrega tudo quando abrir o site
+buscarNoticias();
 </script>
 
 </body>

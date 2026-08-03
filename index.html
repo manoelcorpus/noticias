@@ -56,40 +56,38 @@
       padding: 28px; border-radius: 12px; border: 2px solid var(--laranja);
     }
 
-    /* PLAYER 100% FUNCIONAL */
+    /* PLAYER ABSOLUTAMENTE FUNCIONAL */
     .radio-card { border-color: var(--ouro); text-align: center; }
     .radio-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
     .radio-icon { font-size: 48px; color: var(--ouro); }
-    #radio-status { margin-top: 5px; color: #ffd9b3; }
+    #radio-status { margin: 8px 0; color: #ffd9b3; font-weight: 500; font-size: 17px; }
 
-    .btn-glow {
-      width: 80px; height: 80px; border-radius: 50%; border: none;
-      background: linear-gradient(145deg, var(--laranja), var(--ouro));
-      color: #000; font-size: 30px; cursor: pointer;
-      box-shadow: 0 0 25px rgba(255,102,0,0.6); transition: 0.3s;
+    .player-container { margin: 20px 0; }
+    .player-container audio {
+      width: 100%;
+      max-width: 450px;
+      border-radius: 30px;
     }
-    .btn-glow:hover { transform: scale(1.1); }
 
-    /* GALERIA COM AMPLIAÇÃO AO CLICAR */
+    /* GALERIA COM ZOOM */
     .grid-galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
     .foto-item { border-radius: 10px; overflow: hidden; border: 3px solid var(--laranja); cursor: pointer; transition: 0.3s; }
     .foto-item:hover { border-color: var(--ouro); transform: translateY(-3px); }
-    .foto-item img { width: 100%; height: 190px; object-fit: cover; display: block; pointer-events: none; }
-    .legenda { padding: 10px; text-align: center; background: rgba(0,0,0,0.7); color: var(--ouro); font-weight: 600; pointer-events: none; }
+    .foto-item img { width: 100%; height: 190px; object-fit: cover; display: block; }
+    .legenda { padding: 10px; text-align: center; background: rgba(0,0,0,0.7); color: var(--ouro); font-weight: 600; }
 
-    /* TELA DE FOTO AMPLIADA */
-    .ampliar-foto {
+    .zoom {
       display: none; position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%; background: rgba(0,0,0,0.92);
-      z-index: 99999; padding: 20px; text-align: center;
+      width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+      z-index: 99999; padding: 20px;
     }
-    .ampliar-foto.aberto { display: flex; align-items: center; justify-content: center; flex-direction: column; }
-    .ampliar-foto img { max-width: 90%; max-height: 80vh; border-radius: 8px; border: 3px solid var(--ouro); }
-    .ampliar-foto .fechar {
+    .zoom.aberto { display: flex; align-items: center; justify-content: center; flex-direction: column; }
+    .zoom img { max-width: 95%; max-height: 85vh; border-radius: 8px; border: 3px solid var(--ouro); }
+    .zoom .fechar {
       position: absolute; top: 20px; right: 30px;
-      color: white; font-size: 40px; cursor: pointer; font-weight: bold;
+      color: white; font-size: 45px; cursor: pointer; font-weight: bold;
     }
-    .ampliar-foto .texto { margin-top: 15px; color: var(--ouro); font-size: 18px; font-weight: 600; }
+    .zoom .texto { margin-top: 15px; color: var(--ouro); font-size: 20px; font-weight: 600; }
 
     /* ENQUETE */
     .opcoes-container { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
@@ -105,19 +103,19 @@
     .parceiro-item { background: rgba(255,255,255,0.9); padding: 18px; border-radius: 8px; text-align: center; border: 2px solid var(--ouro); }
     .parceiro-item img { max-width: 100%; height: 130px; object-fit: contain; }
 
-    /* RODAPÉ E CONTADOR FUNCIONAL */
+    /* RODAPÉ E CONTADOR */
     footer {
       background: #000; text-align: center; padding: 30px 20px;
       border-top: 3px solid var(--laranja); color: #ffd9b3;
     }
     .contador-visitas { margin-top: 10px; color: var(--ouro); font-weight: 600; font-size: 18px; }
 
-    /* SISTEMA ADMIN 100% FUNCIONAL */
+    /* SISTEMA ADMIN */
     .botao-admin-fixo {
       position: fixed; bottom: 20px; right: 20px;
       background: var(--laranja); color: #000; padding: 10px 15px;
       border-radius: 25px; font-size: 14px; font-weight: bold;
-      z-index: 9999; border: none; cursor: pointer;
+      z-index: 9999; border: none; cursor: pointer; transition: 0.2s;
     }
     .botao-admin-fixo:hover { background: var(--ouro); }
 
@@ -164,31 +162,35 @@
         <i class="fa-solid fa-broadcast-tower radio-icon"></i>
         <div>
           <h2>Rádio Ao Vivo 24h</h2>
-          <p id="radio-status">Clique para começar a ouvir 🎶</p>
+          <p id="radio-status">Clique no play abaixo para ouvir 🎶</p>
         </div>
       </div>
-      <div class="radio-controls">
-        <audio id="player-audio" src="https://stream.zeno.fm/tnzj3smf3abvv" preload="none">
-        <button id="botao-play" class="btn-glow"><i class="fa-solid fa-play"></i></button>
+      <!-- PLAYER NATIVO DO NAVEGADOR - 100% CLICÁVEL E FUNCIONAL -->
+      <div class="player-container">
+        <audio controls crossorigin="anonymous">
+          <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+          Infelizmente seu navegador não suporta áudio. Acesse diretamente: <a href="https://stream.zeno.fm/tnzj3smf3abvv" target="_blank">Clique aqui</a>
+        
       </div>
+      <p style="font-size:13px; margin-top:8px; color:#ffd9b3;">🔊 Verifique se o volume do seu aparelho está ligado</p>
     </section>
 
     <section id="galeria" class="section">
       <h2 class="section-title"><i class="fa-solid fa-images"></i> Galeria de Fotos <small style="font-size:14px; font-weight:normal;">(clique para ampliar)</small></h2>
       <div id="galeria-grid" class="grid-galeria">
-        <div class="foto-item" onclick="ampliarFoto(this)">
+        <div class="foto-item" onclick="abrirZoom(this)">
           <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Balada">
           <div class="legenda">🎉 Festa de Lançamento - 01/08</div>
         </div>
-        <div class="foto-item" onclick="ampliarFoto(this)">
+        <div class="foto-item" onclick="abrirZoom(this)">
           <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Show">
           <div class="legenda">🎤 Show Nacional - 25/07</div>
         </div>
-        <div class="foto-item" onclick="ampliarFoto(this)">
+        <div class="foto-item" onclick="abrirZoom(this)">
           <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Festa">
           <div class="legenda">💃 Noite Sertaneja - 20/07</div>
         </div>
-        <div class="foto-item" onclick="ampliarFoto(this)">
+        <div class="foto-item" onclick="abrirZoom(this)">
           <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Forró">
           <div class="legenda">🎶 Grande Forró - 15/07</div>
         </div>
@@ -198,9 +200,9 @@
     <section id="enquete" class="section">
       <div class="card">
         <h2 class="section-title"><i class="fa-solid fa-poll"></i> Enquete do Momento</h2>
-        <h3>Qual estilo você quer na próxima festa?</h3>
-        <div class="opcoes-container">
-          <div class="opcao" onclick="alert('✅ Seu voto em Forró foi registrado!')">🎶 Forró das Antigas</div>
+        <h3 id="pergunta-enquete">Qual estilo você quer na próxima festa?</h3>
+        <div id="opcoes-enquete" class="opcoes-container">
+          <div class="opcao" onclick="alert('✅ Seu voto em Forró das Antigas foi registrado!')">🎶 Forró das Antigas</div>
           <div class="opcao" onclick="alert('✅ Seu voto em Sertanejo foi registrado!')">🤠 Sertanejo Universitário</div>
           <div class="opcao" onclick="alert('✅ Seu voto em Piseiro foi registrado!')">💃 Piseiro e Forró</div>
           <div class="opcao" onclick="alert('✅ Seu voto em Todos foi registrado!')">✨ Todos os estilos</div>
@@ -210,7 +212,7 @@
 
     <section id="patrocinadores" class="section">
       <h2 class="section-title"><i class="fa-solid fa-handshake"></i> Nossos Parceiros</h2>
-      <div id="patrocinadores-grid" class="grid-patrocinadores">
+      <div id="grid-parceiros" class="grid-patrocinadores">
         <div class="parceiro-item"><img src="https://via.placeholder.com/300x200/ff6600/ffffff?text=Balada+Center" alt="Balada Center"></div>
         <div class="parceiro-item"><img src="https://via.placeholder.com/300x200/ffcc00/000?text=Eventos+%26+Cia" alt="Eventos e Cia"></div>
         <div class="parceiro-item"><img src="https://via.placeholder.com/300x200/ff6600/ffffff?text=Som+%26+Luz" alt="Som e Luz"></div>
@@ -226,14 +228,12 @@
     </div>
   </footer>
 
-  <!-- TELA DE FOTO AMPLIADA -->
-  <div class="ampliar-foto" id="tela-foto" onclick="fecharFoto()">
+  <div class="zoom" id="tela-zoom" onclick="fecharZoom()">
     <span class="fechar">&times;</span>
-    <img id="foto-grande" src="" alt="">
-    <div class="texto" id="texto-foto"></div>
+    <img id="img-zoom" src="" alt="">
+    <div class="texto" id="legenda-zoom"></div>
   </div>
 
-  <!-- PAINEL ADMIN -->
   <button class="botao-admin-fixo" onclick="abrirAdmin()">🔐 Admin</button>
   <div class="painel-admin" id="painel">
     <div class="caixa-painel">
@@ -251,24 +251,25 @@
       </div>
 
       <div id="tela-controles" style="display:none;">
-        <p style="color:#2ecc71; text-align:center; margin-bottom:15px;">✅ Acesso liberado!</p>
+        <p style="color:#2ecc71; text-align:center; margin-bottom:20px;">✅ Acesso liberado!</p>
         
         <div class="grupo">
-          <h3 style="color:var(--ouro); margin-bottom:10px;">📸 Adicionar Nova Foto</h3>
-          <label>Link da imagem:</label>
-          <input type="text" id="link-foto" placeholder="Cole o link da foto aqui">
-          <label>Legenda / Data:</label>
-          <input type="text" id="legenda-foto" placeholder="Ex: Festa - 01/08/2026">
-          <button class="btn-verde" style="width:100%; margin-top:8px;" onclick="adicionarFoto()">Adicionar Foto</button>
+          <h3 style="color:var(--ouro); margin-bottom:10px;">📸 Adicionar Foto</h3>
+          <input type="text" id="link-foto" placeholder="Link da imagem">
+          <input type="text" id="legenda-foto" placeholder="Legenda">
+          <button class="btn-verde" style="width:100%; margin-top:8px;" onclick="adicionarFoto()">Adicionar</button>
         </div>
 
         <div class="grupo">
-          <h3 style="color:var(--ouro); margin-bottom:10px;">💬 Pedido de Música</h3>
-          <a href="https://wa.me/5588992811188?text=Olá! Quero pedir uma música ou anunciar aqui!" target="_blank" class="btn-verde" style="display:block; text-align:center; text-decoration:none;">📲 Chamar no WhatsApp</a>
+          <h3 style="color:var(--ouro); margin-bottom:10px;">🗳️ Editar Enquete</h3>
+          <input type="text" id="nova-pergunta" placeholder="Nova pergunta">
+          <button class="btn-verde" style="width:100%; margin-top:8px;" onclick="alterarPergunta()">Alterar</button>
         </div>
 
         <div class="grupo">
-          <p style="font-size:13px; color:#ffd9b3;">💡 Dica: clique em qualquer foto para ver em tamanho grande!</p>
+          <h3 style="color:var(--ouro); margin-bottom:10px;">🤝 Adicionar Parceiro</h3>
+          <input type="text" id="link-parceiro" placeholder="Link da logo">
+          <button class="btn-verde" style="width:100%; margin-top:8px;" onclick="adicionarParceiro()">Adicionar</button>
         </div>
 
         <div class="botoes">
@@ -280,42 +281,19 @@
   </div>
 
 <script>
-// PLAYER CORRIGIDO E FUNCIONAL
-const player = document.getElementById('player-audio');
-const btnPlay = document.getElementById('botao-play');
-const status = document.getElementById('radio-status');
-let tocando = false;
-
-btnPlay.addEventListener('click', (e) => {
-  e.preventDefault();
-  if(!tocando) {
-    player.play().catch(err => alert('Clique novamente para iniciar!'));
-    btnPlay.innerHTML = '<i class="fa-solid fa-pause"></i>';
-    status.innerText = '🔊 Agora estamos ao vivo! Aproveite!';
-    tocando = true;
-  } else {
-    player.pause();
-    btnPlay.innerHTML = '<i class="fa-solid fa-play"></i>';
-    status.innerText = 'Clique para começar a ouvir 🎶';
-    tocando = false;
-  }
-});
-
-// FUNÇÃO AMPLIAR FOTO
-function ampliarFoto(elemento) {
-  const linkImg = elemento.querySelector('img').src;
-  const texto = elemento.querySelector('.legenda').innerText;
-  document.getElementById('foto-grande').src = linkImg;
-  document.getElementById('texto-foto').innerText = texto;
-  document.getElementById('tela-foto').classList.add('aberto');
+// ZOOM
+function abrirZoom(el) {
+  document.getElementById('img-zoom').src = el.querySelector('img').src;
+  document.getElementById('legenda-zoom').innerText = el.querySelector('.legenda').innerText;
+  document.getElementById('tela-zoom').classList.add('aberto');
   document.body.style.overflow = 'hidden';
 }
-function fecharFoto() {
-  document.getElementById('tela-foto').classList.remove('aberto');
+function fecharZoom() {
+  document.getElementById('tela-zoom').classList.remove('aberto');
   document.body.style.overflow = 'auto';
 }
 
-// SISTEMA ADMIN CORRIGIDO
+// ADMIN
 const SENHA = 'russas2026';
 function abrirAdmin() {
   document.getElementById('painel').classList.add('aberto');
@@ -335,19 +313,28 @@ function verificarSenha() {
   } else { alert('❌ Senha incorreta!'); }
 }
 function adicionarFoto() {
-  const link = document.getElementById('link-foto').value;
-  const legenda = document.getElementById('legenda-foto').value;
-  if(!link || !legenda) return alert('Preencha os dois campos!');
-
-  const html = <div class="foto-item" onclick="ampliarFoto(this)"><img src="${link}" alt="${legenda}"><div class="legenda">${legenda}</div></div>;
-  document.getElementById('galeria-grid').insertAdjacentHTML('afterbegin', html);
-  
-  document.getElementById('link-foto').value = '';
-  document.getElementById('legenda-foto').value = '';
-  alert('✅ Foto adicionada! Salve o arquivo para ficar permanente!');
+  const l = document.getElementById('link-foto').value;
+  const leg = document.getElementById('legenda-foto').value;
+  if(!l || !leg) return alert('Preencha os dois campos!');
+  document.getElementById('galeria-grid').insertAdjacentHTML('afterbegin', 
+    <div class="foto-item" onclick="abrirZoom(this)"><img src="${l}"><div class="legenda">${leg}</div></div>);
+  alert('✅ Foto adicionada! Salve o arquivo!');
+}
+function alterarPergunta() {
+  const n = document.getElementById('nova-pergunta').value;
+  if(!n) return alert('Digite a nova pergunta!');
+  document.getElementById('pergunta-enquete').innerText = n;
+  alert('✅ Pergunta alterada! Salve o arquivo!');
+}
+function adicionarParceiro() {
+  const l = document.getElementById('link-parceiro').value;
+  if(!l) return alert('Cole o link da logo!');
+  document.getElementById('grid-parceiros').insertAdjacentHTML('afterbegin', 
+    <div class="parceiro-item"><img src="${l}"></div>);
+  alert('✅ Parceiro adicionado! Salve o arquivo!');
 }
 
-// CONTADOR DE ACESSOS FUNCIONAL
+// CONTADOR
 let visitas = Number(localStorage.getItem('visitas')) || 0;
 visitas++;
 localStorage.setItem('visitas', visitas);

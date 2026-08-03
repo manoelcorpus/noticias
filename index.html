@@ -56,17 +56,13 @@
       padding: 28px; border-radius: 12px; border: 2px solid var(--laranja);
     }
 
-    /* PLAYER ABSOLUTAMENTE FUNCIONAL */
+    /* PLAY FUNCIONAL */
     .radio-card { border-color: var(--ouro); text-align: center; }
     .radio-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
     .radio-icon { font-size: 48px; color: var(--ouro); }
     #radio-status { margin: 8px 0; color: #ffd9b3; font-weight: 500; font-size: 17px; }
-
-    .player-container { margin: 20px 0; }
     .player-container audio {
-      width: 100%;
-      max-width: 450px;
-      border-radius: 30px;
+      width: 100%; max-width: 480px; border-radius: 30px;
     }
 
     /* GALERIA COM ZOOM */
@@ -89,7 +85,8 @@
     }
     .zoom .texto { margin-top: 15px; color: var(--ouro); font-size: 20px; font-weight: 600; }
 
-    /* ENQUETE */
+    /* ENQUETE COMPLETA */
+    .info-enquete { margin-bottom: 15px; color: #ffd9b3; font-size: 16px; }
     .opcoes-container { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
     .opcao {
       background: linear-gradient(90deg, var(--meio-tom), rgba(255,102,0,0.1));
@@ -103,12 +100,12 @@
     .parceiro-item { background: rgba(255,255,255,0.9); padding: 18px; border-radius: 8px; text-align: center; border: 2px solid var(--ouro); }
     .parceiro-item img { max-width: 100%; height: 130px; object-fit: contain; }
 
-    /* RODAPÉ E CONTADOR */
+    /* RODAPÉ E CONTADORES */
     footer {
       background: #000; text-align: center; padding: 30px 20px;
       border-top: 3px solid var(--laranja); color: #ffd9b3;
     }
-    .contador-visitas { margin-top: 10px; color: var(--ouro); font-weight: 600; font-size: 18px; }
+    .contadores { margin-top: 10px; color: var(--ouro); font-weight: 600; font-size: 18px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
 
     /* SISTEMA ADMIN */
     .botao-admin-fixo {
@@ -162,17 +159,15 @@
         <i class="fa-solid fa-broadcast-tower radio-icon"></i>
         <div>
           <h2>Rádio Ao Vivo 24h</h2>
-          <p id="radio-status">Clique no play abaixo para ouvir 🎶</p>
+          <p id="radio-status">Clique no play para ouvir 🎶</p>
         </div>
       </div>
-      <!-- PLAYER NATIVO DO NAVEGADOR - 100% CLICÁVEL E FUNCIONAL -->
       <div class="player-container">
         <audio controls crossorigin="anonymous">
           <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
-          Infelizmente seu navegador não suporta áudio. Acesse diretamente: <a href="https://stream.zeno.fm/tnzj3smf3abvv" target="_blank">Clique aqui</a>
+          Seu navegador não suporta áudio: <a href="https://stream.zeno.fm/tnzj3smf3abvv" target="_blank" style="color:var(--ouro);">Clique aqui</a>
         
       </div>
-      <p style="font-size:13px; margin-top:8px; color:#ffd9b3;">🔊 Verifique se o volume do seu aparelho está ligado</p>
     </section>
 
     <section id="galeria" class="section">
@@ -200,12 +195,15 @@
     <section id="enquete" class="section">
       <div class="card">
         <h2 class="section-title"><i class="fa-solid fa-poll"></i> Enquete do Momento</h2>
-        <h3 id="pergunta-enquete">Qual estilo você quer na próxima festa?</h3>
+        <div class="info-enquete">
+          <strong>Pergunta:</strong> <span id="pergunta-enquete">Qual estilo você quer na próxima festa?</span><br>
+          <span id="dados-enquete">📊 Total de votos: <span id="total-votos">0</span></span>
+        </div>
         <div id="opcoes-enquete" class="opcoes-container">
-          <div class="opcao" onclick="alert('✅ Seu voto em Forró das Antigas foi registrado!')">🎶 Forró das Antigas</div>
-          <div class="opcao" onclick="alert('✅ Seu voto em Sertanejo foi registrado!')">🤠 Sertanejo Universitário</div>
-          <div class="opcao" onclick="alert('✅ Seu voto em Piseiro foi registrado!')">💃 Piseiro e Forró</div>
-          <div class="opcao" onclick="alert('✅ Seu voto em Todos foi registrado!')">✨ Todos os estilos</div>
+          <div class="opcao" onclick="votar(this, '🎶 Forró das Antigas')">🎶 Forró das Antigas <span style="float:right; font-weight:bold;">(<span class="qtd">0</span>)</span></div>
+          <div class="opcao" onclick="votar(this, '🤠 Sertanejo Universitário')">🤠 Sertanejo Universitário <span style="float:right; font-weight:bold;">(<span class="qtd">0</span>)</span></div>
+          <div class="opcao" onclick="votar(this, '💃 Piseiro e Forró')">💃 Piseiro e Forró <span style="float:right; font-weight:bold;">(<span class="qtd">0</span>)</span></div>
+          <div class="opcao" onclick="votar(this, '✨ Todos os estilos')">✨ Todos os estilos <span style="float:right; font-weight:bold;">(<span class="qtd">0</span>)</span></div>
         </div>
       </div>
     </section>
@@ -223,8 +221,9 @@
   <footer>
     <p>&copy; 2026 Portal Online | Parceiro: Web Rádio Ordinária Russas</p>
     <p>Contato: <a href="https://wa.me/5588992811188" style="color:var(--ouro); font-weight:600;">📞 (88) 99281-1188</a> | A Melhor Companhia 24h com Você</p>
-    <div class="contador-visitas">
-      <i class="fa-solid fa-eye"></i> Visitas ao site: <span id="contador">0</span>
+    <div class="contadores">
+      <div><i class="fa-solid fa-eye"></i> Visitantes: <span id="contador-visitantes">0</span></div>
+      <div><i class="fa-solid fa-check-to-slot"></i> Votos na enquete: <span id="contador-votos-rodape">0</span></div>
     </div>
   </footer>
 
@@ -251,37 +250,47 @@
       </div>
 
       <div id="tela-controles" style="display:none;">
-        <p style="color:#2ecc71; text-align:center; margin-bottom:20px;">✅ Acesso liberado!</p>
+        <p style="color:#2ecc71; text-align:center; margin-bottom:20px;">✅ Acesso liberado! Altere tudo como quiser</p>
         
         <div class="grupo">
-          <h3 style="color:var(--ouro); margin-bottom:10px;">📸 Adicionar Foto</h3>
+          <h3 style="color:var(--ouro); margin-bottom:10px;">📸 Adicionar Foto na Galeria</h3>
           <input type="text" id="link-foto" placeholder="Link da imagem">
-          <input type="text" id="legenda-foto" placeholder="Legenda">
-          <button class="btn-verde" style="width:100%; margin-top:8px;" onclick="adicionarFoto()">Adicionar</button>
+          <input type="text" id="legenda-foto" placeholder="Legenda da foto">
+          <button class="btn-verde" style="width:100%; margin-top:8px;" onclick="adicionarFoto()">Adicionar Foto</button>
         </div>
 
         <div class="grupo">
           <h3 style="color:var(--ouro); margin-bottom:10px;">🗳️ Editar Enquete</h3>
-          <input type="text" id="nova-pergunta" placeholder="Nova pergunta">
-          <button class="btn-verde" style="width:100%; margin-top:8px;" onclick="alterarPergunta()">Alterar</button>
+          <input type="text" id="nova-pergunta" placeholder="Nova pergunta da enquete">
+          <button class="btn-verde" style="width:100%; margin-top:8px;" onclick="alterarPergunta()">Alterar Pergunta</button>
         </div>
 
         <div class="grupo">
-          <h3 style="color:var(--ouro); margin-bottom:10px;">🤝 Adicionar Parceiro</h3>
-          <input type="text" id="link-parceiro" placeholder="Link da logo">
-          <button class="btn-verde" style="width:100%; margin-top:8px;" onclick="adicionarParceiro()">Adicionar</button>
+          <h3 style="color:var(--ouro); margin-bottom:10px;">🤝 Adicionar Parceiro/Patrocinador</h3>
+          <input type="text" id="link-parceiro" placeholder="Link da logo do parceiro">
+          <button class="btn-verde" style="width:100%; margin-top:8px;" onclick="adicionarParceiro()">Adicionar Parceiro</button>
+        </div>
+
+        <div class="grupo">
+          <p style="font-size:13px; color:#ffd9b3;">💡 Não esqueça de salvar o arquivo após fazer as alterações!</p>
         </div>
 
         <div class="botoes">
-          <button class="btn-vermelho" onclick="location.reload()">Sair</button>
-          <button class="btn-cinza" onclick="fecharAdmin()">Fechar</button>
+          <button class="btn-vermelho" onclick="location.reload()">Sair e Atualizar</button>
+          <button class="btn-cinza" onclick="fecharAdmin()">Fechar Painel</button>
         </div>
       </div>
     </div>
   </div>
 
 <script>
-// ZOOM
+// 1. PLAY FUNCIONAL - NATIVO DO NAVEGADOR
+const player = document.querySelector('audio');
+player.addEventListener('error', () => {
+  document.getElementById('radio-status').innerText = '⚠️ Clique no link abaixo se o player não iniciar';
+});
+
+// 2. ZOOM DE FOTOS
 function abrirZoom(el) {
   document.getElementById('img-zoom').src = el.querySelector('img').src;
   document.getElementById('legenda-zoom').innerText = el.querySelector('.legenda').innerText;
@@ -293,7 +302,46 @@ function fecharZoom() {
   document.body.style.overflow = 'auto';
 }
 
-// ADMIN
+// 3. ENQUETE COMPLETA COM CONTAGEM
+let votosEnquete = JSON.parse(localStorage.getItem('votosEnquete')) || {
+  '🎶 Forró das Antigas': 0,
+  '🤠 Sertanejo Universitário': 0,
+  '💃 Piseiro e Forró': 0,
+  '✨ Todos os estilos': 0
+};
+let jaVotou = localStorage.getItem('jaVotou') === 'sim';
+atualizarVotosTela();
+
+function votar(el, opcao) {
+  if(jaVotou) return alert('Você já votou nessa enquete!');
+  votosEnquete[opcao]++;
+  jaVotou = true;
+  localStorage.setItem('votosEnquete', JSON.stringify(votosEnquete));
+  localStorage.setItem('jaVotou', 'sim');
+  atualizarVotosTela();
+  alert('✅ Seu voto foi registrado com sucesso! Obrigado por participar!');
+}
+
+function atualizarVotosTela() {
+  let total = 0;
+  Object.values(votosEnquete).forEach(v => total += v);
+  document.getElementById('total-votos').innerText = total;
+  document.getElementById('contador-votos-rodape').innerText = total;
+  
+  const opcoes = document.querySelectorAll('.opcao');
+  opcoes.forEach(op => {
+    const texto = op.innerText.split(' (')[0];
+    op.querySelector('.qtd').innerText = votosEnquete[texto] || 0;
+  });
+}
+
+// 4. CONTADOR DE VISITANTES
+let visitantes = Number(localStorage.getItem('visitantes')) || 0;
+visitantes++;
+localStorage.setItem('visitantes', visitantes);
+document.getElementById('contador-visitantes').innerText = visitantes;
+
+// 5. SISTEMA ADMIN COMPLETO
 const SENHA = 'russas2026';
 function abrirAdmin() {
   document.getElementById('painel').classList.add('aberto');
@@ -315,30 +363,28 @@ function verificarSenha() {
 function adicionarFoto() {
   const l = document.getElementById('link-foto').value;
   const leg = document.getElementById('legenda-foto').value;
-  if(!l || !leg) return alert('Preencha os dois campos!');
+  if(!l || !leg) return alert('Preencha o link e a legenda!');
   document.getElementById('galeria-grid').insertAdjacentHTML('afterbegin', 
-    <div class="foto-item" onclick="abrirZoom(this)"><img src="${l}"><div class="legenda">${leg}</div></div>);
-  alert('✅ Foto adicionada! Salve o arquivo!');
+    <div class="foto-item" onclick="abrirZoom(this)"><img src="${l}" alt="${leg}"><div class="legenda">${leg}</div></div>);
+  document.getElementById('link-foto').value = '';
+  document.getElementById('legenda-foto').value = '';
+  alert('✅ Foto adicionada! Salve o arquivo para ficar permanente!');
 }
 function alterarPergunta() {
   const n = document.getElementById('nova-pergunta').value;
   if(!n) return alert('Digite a nova pergunta!');
   document.getElementById('pergunta-enquete').innerText = n;
-  alert('✅ Pergunta alterada! Salve o arquivo!');
+  document.getElementById('nova-pergunta').value = '';
+  alert('✅ Pergunta da enquete alterada! Salve o arquivo!');
 }
 function adicionarParceiro() {
   const l = document.getElementById('link-parceiro').value;
-  if(!l) return alert('Cole o link da logo!');
+  if(!l) return alert('Cole o link da logo do parceiro!');
   document.getElementById('grid-parceiros').insertAdjacentHTML('afterbegin', 
-    <div class="parceiro-item"><img src="${l}"></div>);
+    <div class="parceiro-item"><img src="${l}" alt="Parceiro"></div>);
+  document.getElementById('link-parceiro').value = '';
   alert('✅ Parceiro adicionado! Salve o arquivo!');
 }
-
-// CONTADOR
-let visitas = Number(localStorage.getItem('visitas')) || 0;
-visitas++;
-localStorage.setItem('visitas', visitas);
-document.getElementById('contador').innerText = visitas;
 </script>
 
 </body>

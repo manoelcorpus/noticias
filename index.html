@@ -9,7 +9,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body { background: #e6f2ff; color: #222; }
 
-        /* BARRA TOPO EXATA DO MODELO */
+        /* BARRA TOPO */
         .top-bar {
             background: #0066cc;
             color: white;
@@ -67,7 +67,7 @@
 
         footer { background: #0066cc; color: white; text-align: center; padding: 18px; margin-top: 25px; }
 
-        /* PAINEL ADMIN SIMPLES */
+        /* PAINEL ADMIN */
         .btn-admin { position: fixed; bottom: 20px; right: 20px; background: #ff8800; color: white; border: none; padding: 9px 14px; border-radius: 18px; font-weight: bold; cursor: pointer; z-index: 999; }
         .painel-admin { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; padding: 20px; overflow-y: auto; }
         .painel-admin.aberto { display: block; }
@@ -98,6 +98,7 @@
         <button class="btn-play" id="btnTocar"><i class="fa-solid fa-play"></i></button>
         <audio id="radio" preload="metadata">
             <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+        </audio>
         
         <div class="barra-tempo"></div>
         <span class="nome-site" id="nomeRadioEl">Rádio Ordinária Russas - V4.0.8</span>
@@ -136,7 +137,7 @@
             <div class="chat-lista" id="chatEl">
                 <div class="chat-msg"><span class="chat-nome">Sistema:</span> Seja bem-vindo!</div>
             </div>
-            <div class="online"><span id="qtdOnline">0</span> ouvintes online</div>
+            <div class="online"><span id="qtdOnline">1</span> ouvintes online</div>
         </div>
     </div>
 
@@ -152,9 +153,7 @@
 
         <div class="caixa">
             <div class="titulo">Últimas Notícias</div>
-            <div id="listaNoticias">
-                <div class="news-item"><h4>Bem-vindo à Rádio Ordinária Russas</h4><div class="news-data">03/08/2026</div><p>Fique por dentro de tudo o que acontece!</p></div>
-            </div>
+            <div id="listaNoticias"></div>
         </div>
 
         <div class="caixa">
@@ -209,7 +208,7 @@
         <h2>Painel de Controle</h2>
 
         <div id="formLogin">
-            <input type="password" id="senhaAdmin" placeholder="Digite a senha">
+            <input type="password" id="senhaAdmin" placeholder="Digite a senha (padrão: russas2026)">
             <div class="grupo-botoes">
                 <button class="btn-verde" onclick="verificarSenha()">Entrar</button>
                 <button class="btn-vermelho" onclick="fecharAdmin()">Fechar</button>
@@ -222,15 +221,15 @@
             <input type="text" id="edtNomeProg" placeholder="Nome do Programa">
             <input type="text" id="edtHorario" placeholder="Horário">
             <input type="text" id="edtNomeOuvinte" placeholder="Nome Ouvinte do Mês">
-            <input type="text" id="edtFotoOuvinte" placeholder="Link da foto ouvinte: basta colar ou trocar">
-            <input type="text" id="edtBannerCam" placeholder="Link da imagem do estúdio: basta trocar">
+            <input type="text" id="edtFotoOuvinte" placeholder="Link da foto ouvinte">
+            <input type="text" id="edtBannerCam" placeholder="Link da imagem do estúdio">
             <input type="text" id="edtPatrocinador" placeholder="Nome Patrocinador">
             <input type="text" id="edtNomeRecado" placeholder="Nome autor recado">
             <textarea rows="2" id="edtTextoRecado" placeholder="Texto do recado"></textarea>
             <input type="text" id="edtImgRecado" placeholder="Link da imagem do recado">
             <input type="text" id="edtTextoRodape" placeholder="Texto rodapé">
 
-            <textarea rows="2" id="novaNoticia" placeholder="Escreva nova notícia"></textarea>
+            <textarea rows="2" id="novaNoticia" placeholder="Escreva uma nova notícia"></textarea>
             <button class="btn-verde" style="width: 100%; margin-bottom: 8px;" onclick="adicionarNoticia()">Adicionar Notícia</button>
 
             <div class="grupo-botoes">
@@ -262,7 +261,8 @@ btnTocar.addEventListener('click', () => {
 
 // CONTADOR
 let visitas = Number(localStorage.getItem('visitas_radio')) || 13050;
-visitas++; localStorage.setItem('visitas_radio', visitas);
+visitas++; 
+localStorage.setItem('visitas_radio', visitas);
 document.getElementById('qtdVisitas').innerText = visitas;
 
 // SISTEMA ADMIN SIMPLES
@@ -273,18 +273,22 @@ function abrirAdmin() {
     document.getElementById('formLogin').style.display = 'block';
     document.getElementById('formEditar').style.display = 'none';
 }
+
 function fecharAdmin() {
     document.getElementById('painelAdmin').classList.remove('aberto');
 }
+
 function verificarSenha() {
     if(document.getElementById('senhaAdmin').value === SENHA_CERTA) {
         document.getElementById('formLogin').style.display = 'none';
         document.getElementById('formEditar').style.display = 'block';
-        carregarDados();
-    } else alert('Senha incorreta!');
+        carregarCamposModal();
+    } else {
+        alert('Senha incorreta!');
+    }
 }
 
-function carregarDados() {
+function carregarCamposModal() {
     document.getElementById('edtNomeRadio').value = localStorage.getItem('nome_radio') || 'Rádio Ordinária Russas - V4.0.8';
     document.getElementById('edtNomeProg').value = localStorage.getItem('nome_prog') || 'Show da Manhã';
     document.getElementById('edtHorario').value = localStorage.getItem('horario') || '05:00 às 12:00';
@@ -296,8 +300,6 @@ function carregarDados() {
     document.getElementById('edtTextoRecado').value = localStorage.getItem('texto_recado') || 'Seja muito bem-vindo!';
     document.getElementById('edtImgRecado').value = localStorage.getItem('img_recado') || '';
     document.getElementById('edtTextoRodape').value = localStorage.getItem('texto_rodape') || 'A melhor companhia para você 24h por dia';
-
-    aplicarAlteracoes();
 }
 
 function salvarTudo() {
@@ -315,38 +317,72 @@ function salvarTudo() {
 
     aplicarAlteracoes();
     alert('✅ Salvo com sucesso! Tudo atualizado.');
+    fecharAdmin();
 }
 
 function aplicarAlteracoes() {
-    document.getElementById('nomeRadioEl').innerText = localStorage.getItem('nome_radio');
-    document.getElementById('progNoAr').innerText = 'No Ar: ' + localStorage.getItem('nome_prog');
-    document.getElementById('nomeProgEl').innerText = localStorage.getItem('nome_prog');
-    document.getElementById('horarioEl').innerText = localStorage.getItem('horario');
-    document.getElementById('horarioProgEl').innerText = localStorage.getItem('horario');
-    document.getElementById('nomeOuvinteEl').innerText = localStorage.getItem('nome_ouvinte');
+    const nomeRadio = localStorage.getItem('nome_radio') || 'Rádio Ordinária Russas - V4.0.8';
+    const nomeProg = localStorage.getItem('nome_prog') || 'Show da Manhã';
+    const horario = localStorage.getItem('horario') || '05:00 às 12:00';
+    const nomeOuvinte = localStorage.getItem('nome_ouvinte') || 'DJ BS';
+    const fotoOuvinte = localStorage.getItem('foto_ouvinte') || 'https://via.placeholder.com/220x240/cccccc/0066cc?text=Ouvinte+do+M%C3%AAs';
+    const bannerCam = localStorage.getItem('banner_cam') || 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80';
+    const patrocinador = localStorage.getItem('patrocinador') || 'Seu Patrocinador Aqui';
+    const nomeRecado = localStorage.getItem('nome_recado') || 'Equipe da Rádio';
+    const textoRecado = localStorage.getItem('texto_recado') || 'Seja muito bem-vindo!';
+    const imgRecado = localStorage.getItem('img_recado') || 'https://via.placeholder.com/600x180/cccccc/0066cc?text=Mural+de+Recados';
+    const textoRodape = localStorage.getItem('texto_rodape') || 'A melhor companhia para você 24h por dia';
 
-    if(localStorage.getItem('foto_ouvinte')) document.getElementById('fotoOuvinteEl').src = localStorage.getItem('foto_ouvinte');
-    if(localStorage.getItem('banner_cam')) document.getElementById('bannerCameraEl').src = localStorage.getItem('banner_cam');
+    document.getElementById('nomeRadioEl').innerText = nomeRadio;
+    document.getElementById('progNoAr').innerText = 'No Ar: ' + nomeProg;
+    document.getElementById('nomeProgEl').innerText = nomeProg;
+    document.getElementById('horarioEl').innerText = horario;
+    document.getElementById('horarioProgEl').innerText = horario;
+    document.getElementById('nomeOuvinteEl').innerText = nomeOuvinte;
+    document.getElementById('fotoOuvinteEl').src = fotoOuvinte;
+    document.getElementById('bannerCameraEl').src = bannerCam;
+    document.getElementById('nomePatrocinadorEl').innerText = patrocinador;
+    document.getElementById('nomeRecadoEl').innerText = nomeRecado;
+    document.getElementById('textoRecadoEl').innerText = textoRecado;
+    document.getElementById('imgRecadoEl').src = imgRecado;
+    document.getElementById('nomeRodapeEl').innerText = nomeRadio;
+    document.getElementById('textoRodapeEl').innerText = textoRodape;
 
-    document.getElementById('nomePatrocinadorEl').innerText = localStorage.getItem('patrocinador');
-    document.getElementById('nomeRecadoEl').innerText = localStorage.getItem('nome_recado');
-    document.getElementById('textoRecadoEl').innerText = localStorage.getItem('texto_recado');
-    if(localStorage.getItem('img_recado')) document.getElementById('imgRecadoEl').src = localStorage.getItem('img_recado');
-
-    document.getElementById('nomeRodapeEl').innerText = localStorage.getItem('nome_radio');
-    document.getElementById('textoRodapeEl').innerText = localStorage.getItem('texto_rodape');
+    carregarNoticias();
 }
 
 function adicionarNoticia() {
     const texto = document.getElementById('novaNoticia').value.trim();
     if(!texto) return alert('Escreva a notícia!');
+    
     const hoje = new Date().toLocaleDateString('pt-BR');
-    document.getElementById('listaNoticias').insertAdjacentHTML('afterbegin', 
-        <div class="news-item"><h4>${texto}</h4><div class="news-data">${hoje}</div></div>);
+    let noticias = JSON.parse(localStorage.getItem('noticias_radio')) || [];
+    noticias.unshift({ texto: texto, data: hoje });
+    localStorage.setItem('noticias_radio', JSON.stringify(noticias));
+    
     document.getElementById('novaNoticia').value = '';
+    carregarNoticias();
+    alert('Notícia publicada com sucesso!');
 }
 
-window.onload = carregarDados;
+function carregarNoticias() {
+    let noticias = JSON.parse(localStorage.getItem('noticias_radio')) || [
+        { texto: "Bem-vindo à Rádio Ordinária Russas", data: "03/08/2026" }
+    ];
+    
+    const container = document.getElementById('listaNoticias');
+    container.innerHTML = '';
+    
+    noticias.forEach(item => {
+        container.innerHTML += `
+            <div class="news-item">
+                <h4>${item.texto}</h4>
+                <div class="news-data">${item.data}</div>
+            </div>`;
+    });
+}
+
+window.onload = aplicarAlteracoes;
 </script>
 
 </body>
